@@ -1,0 +1,4 @@
+if(10 == 10){
+    print("estoy adentro");
+    print("estoy adentro x2");
+}

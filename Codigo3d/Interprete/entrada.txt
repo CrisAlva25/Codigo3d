@@ -1,0 +1,14 @@
+ var = 1 + 0
+ if var > 10 goto L1
+ goto L2
+L1:
+ T1 = 0-1
+ goto L3
+L2:
+ T1 = 0+1
+L3:
+ write("hola mundo")
+ if var == 10 goto L4
+ var = var + T1
+ goto L3
+L4:

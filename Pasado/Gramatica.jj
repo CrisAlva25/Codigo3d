@@ -1,0 +1,77 @@
+options {
+  IGNORE_CASE = true;
+  STATIC = false;
+}
+
+PARSER_BEGIN(Gramatica)
+/** Analizador de expresiones aritmeticas sencillas. */
+package Analizador; 
+public class Gramatica {
+}
+PARSER_END(Gramatica)
+
+/** Lexico */
+SKIP : {
+      " "
+    | "\t"
+    | "\r"
+    | "\n"
+}
+
+TOKEN : {
+      <NUMERO: (["0"-"9"])+>
+    | <DECIMAL: (["0"-"9"])+"."(["0"-"9"])+>
+    | <PARENI: "(">
+    | <PAREND: ")">
+    | <MAS: "+">
+    | <MENOS: "-">
+    | <POR: "*">
+    | <DIV: "/">
+    | <Vacio: "">
+}
+/** Fin Lexico */
+
+
+/** Producción inicial 
+    Analizar -> (Instruccion)+ EOF
+*/
+void Analizar() :
+{String cadena;}
+{
+  (cadena = E(""))+ <EOF> {System.out.println(cadena);}
+}
+
+String E(String cadena):
+{String tmp; String tmp2;}
+{
+    tmp = T(cadena)  tmp2 = E_P(tmp) {return tmp2;}
+}
+
+String E_P(String cadena):
+{String tmp; String tmp2;}
+{
+        <MAS> tmp = T("+" + cadena) tmp2 = E_P(tmp) {return tmp2;}
+    |   <MENOS> tmp = T("-" + cadena) tmp2 = E_P(cadena) {return tmp2;}
+    |  	{return cadena;}
+}
+
+
+String T(String cadena):
+{String tmp; String tmp2;}
+{
+    tmp = F(cadena) tmp2 = T_P(tmp) {return tmp2;}
+}
+
+String T_P(String cadena):
+{String tmp; String tmp2;}
+{
+        <POR>  tmp = T("*" + cadena) tmp2 = T_P(tmp) {return tmp2;}
+    |   <DIV>  tmp = T("/" + cadena) tmp2 = T_P(tmp) {return tmp2;}
+    |  	{return cadena;}
+}
+
+String F(String cadena):
+{}
+{
+    <NUMERO> {return cadena + token.image;}
+}

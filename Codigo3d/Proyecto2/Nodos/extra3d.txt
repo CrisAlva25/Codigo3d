@@ -1,0 +1,58 @@
+function factorial(numero){
+    if(numero == 0){
+       return 1; 
+    }
+    return numero * factorial(numero-1)
+}
+
+factorial(10);
+
+
+//el return esta en el +0 y luego empezamos en +1
+
+procedure factorial:
+    Begin:
+        T1 = SP + 1
+        T2 = Pila[T1]
+
+        if T2 == 0 goto L1
+        goto L2
+
+    L1:
+        T3 = Sp + 0
+        Pila[T3] = 1;
+        goto Lfinal
+    L2:
+        T4 = SP + 1
+        T5 = Pila[T4]
+
+        T6 = SP + 1
+        T7 = Pila[T6]
+        T8 = T7 - 1
+
+        T9 = SP + 2
+        T10 = T9 + 1
+        Pila[T10] = T8
+
+        //codigo extra
+        T100 = SP + 3
+        Pila[T100] = T5
+
+        SP = SP + 3
+        Call factorial
+        SP = SP - 3
+
+        T101 = SP + 3
+        T5 = Pila[T101]
+
+        T11 = Sp + 2
+        T12 = Pila[T11]
+
+        T13 = T5 * T12
+        T14 = SP + 0
+        Pila[T15] = T13
+
+    LFinal:
+
+    END
+    
